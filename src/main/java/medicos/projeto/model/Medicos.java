@@ -19,7 +19,7 @@ public class Medicos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Boolean status;
+    private Boolean status = true;
     private String nome;
     private String email;
     private String telefone;
