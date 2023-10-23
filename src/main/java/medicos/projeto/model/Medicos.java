@@ -25,7 +25,15 @@ public class Medicos {
     private String telefone;
     private String crm;
     @Enumerated(EnumType.STRING)
-    public Especialidade especialidade;
+    private Especialidade especialidade;
     @ManyToOne
-    public Endereco endereco;
+    private Endereco endereco;
+    @Override
+    public String toString() {
+        return "Medicos [id=" + id + ", status=" + status + ", nome=" + nome + ", email=" + email + ", telefone="
+                + telefone + ", crm=" + crm + ", especialidade=" + especialidade + ", endereco=" + endereco + "]";
+    }
+
+
+    
 }

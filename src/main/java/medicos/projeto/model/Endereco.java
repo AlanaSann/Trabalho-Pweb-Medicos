@@ -22,6 +22,6 @@ public class Endereco {
     private String complemento;
     private String bairro;
     private String cidade;
-    private String UF;
-    private String CEP; 
+    private String uf;
+    private String cep; 
 }
