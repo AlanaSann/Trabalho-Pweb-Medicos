@@ -36,7 +36,7 @@ public class MedicosController {
     @PostMapping("/cadastrar")
     public ResponseEntity<MedicoDto> cadastrar(@Valid @RequestBody MedicoForm medico) {
         Medicos medicoConvertido = modelMapper.map(medico, Medicos.class);
-        medicoService.cadastrarMedicos(medicoConvertido);
+        medicoService.cadastrarMedico(medicoConvertido);
         MedicoDto medicoDto = modelMapper.map(medicoConvertido, MedicoDto.class);
         return ResponseEntity.created(null).body(medicoDto);
 
@@ -48,16 +48,21 @@ public class MedicosController {
         return ResponseEntity.ok().body(medicoService.listarMedicos(pageable).map(m-> modelMapper.map(m, MedicoDto.class)));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<MedicoDto> getMedico(@PathVariable Long id){
+        return ResponseEntity.ok().body(modelMapper.map(medicoService.encontrarMedico(id), MedicoDto.class));
+    }
+
     @DeleteMapping("/deletar/{id}")
     public Object deletar(@PathVariable Long id){
-         medicoService.deletarMedicos(id);
+         medicoService.deletarMedico(id);
         return ResponseEntity.noContent().build();
     }
     
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<MedicoDto> atualizar(@PathVariable Long id,@Valid @RequestBody MedicoForm medico){
         Medicos medicoConvertido =  modelMapper.map(medico, Medicos.class);
-        medicoService.atualizarMedicos(id, medicoConvertido);
+        medicoService.atualizarMedico(id, medicoConvertido);
         MedicoDto medicoDto = modelMapper.map(medicoConvertido, MedicoDto.class);
         return ResponseEntity.created(null).body(medicoDto);
     }

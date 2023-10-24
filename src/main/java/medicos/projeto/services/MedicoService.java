@@ -23,7 +23,7 @@ public class MedicoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    public Medicos cadastrarMedicos(Medicos medico) {
+    public Medicos cadastrarMedico(Medicos medico) {
         medico.setStatus(true);
         enderecoRepository.save(medico.getEndereco());
         return medicoRepository.save(medico);
@@ -33,13 +33,13 @@ public class MedicoService {
         return medicoRepository.findAllByStatus(true, pageable);
     }
 
-    public void deletarMedicos(Long id){
-        Medicos medicoAserExcluido = encontrarMedicos(id);
+    public void deletarMedico(Long id){
+        Medicos medicoAserExcluido = encontrarMedico(id);
         medicoAserExcluido.setStatus(false);
         medicoRepository.save(medicoAserExcluido);
     }
 
-    public Medicos encontrarMedicos(Long id){
+    public Medicos encontrarMedico(Long id){
         Optional<Medicos> medico = medicoRepository.findByIdAndStatus(id,true);
         if (medico.isEmpty()) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(404),"Medico não encontrado");
@@ -47,8 +47,8 @@ public class MedicoService {
         return medico.get();
     }
 
-    public Medicos atualizarMedicos(Long id, Medicos medico){
-        Medicos medicoAserEditado = encontrarMedicos(id);
+    public Medicos atualizarMedico(Long id, Medicos medico){
+        Medicos medicoAserEditado = encontrarMedico(id);
         medicoAserEditado.setNome(medico.getNome());
         medicoAserEditado.setTelefone(medico.getTelefone());
         medicoAserEditado.setEndereco(medico.getEndereco());
