@@ -13,6 +13,8 @@ import medicos.projeto.dto.MedicoDto;
 import medicos.projeto.model.Medicos;
 import medicos.projeto.repository.EnderecoRepository;
 import medicos.projeto.repository.MedicoRepository;
+import medicos.projeto.rules.Rules;
+
 
 @Service
 public class MedicoService {
@@ -47,8 +49,19 @@ public class MedicoService {
         return medico.get();
     }
 
+    public Medicos encontrarMedico(String crm){
+        Optional<Medicos> medico = medicoRepository.findByCrmAndStatus(crm,true);
+        if (medico.isEmpty()) {
+            throw new ResponseStatusException(HttpStatusCode.valueOf(404),"Medico não encontrado");
+        }
+        return medico.get();
+    }
+
+    
     public Medicos atualizarMedico(Long id, Medicos medico){
+        Rules regra = new Rules();
         Medicos medicoAserEditado = encontrarMedico(id);
+        regra.valida(medicoAserEditado,medico);
         medicoAserEditado.setNome(medico.getNome());
         medicoAserEditado.setTelefone(medico.getTelefone());
         medicoAserEditado.setEndereco(medico.getEndereco());

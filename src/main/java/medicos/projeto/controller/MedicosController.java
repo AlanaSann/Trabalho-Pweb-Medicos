@@ -53,6 +53,11 @@ public class MedicosController {
         return ResponseEntity.ok().body(modelMapper.map(medicoService.encontrarMedico(id), MedicoDto.class));
     }
 
+    @GetMapping("buscar/{crm}")
+    public ResponseEntity<MedicoDto> buscarMedicoCpf(@PathVariable String crm){
+        return ResponseEntity.ok().body(modelMapper.map(medicoService.encontrarMedico(crm), MedicoDto.class));
+    }
+
     @DeleteMapping("/deletar/{id}")
     public Object deletar(@PathVariable Long id){
          medicoService.deletarMedico(id);
