@@ -1,5 +1,9 @@
 package medicos.projeto.controller;
 
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,7 +51,10 @@ public class MedicosController {
         Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.ASC, "nome"));
         return ResponseEntity.ok().body(medicoService.listarMedicos(pageable).map(m-> modelMapper.map(m, MedicoDto.class)));
     }
-
+    @GetMapping("/listarMedicos")
+    public ResponseEntity<List<MedicoDto>> listarTodos(){
+        return ResponseEntity.ok().body(medicoService.listarMedicos().stream().map(m-> modelMapper.map(m, MedicoDto.class)).collect(Collectors.toList()));
+    }
     @GetMapping("/{id}")
     public ResponseEntity<MedicoDto> getMedico(@PathVariable Long id){
         return ResponseEntity.ok().body(modelMapper.map(medicoService.encontrarMedico(id), MedicoDto.class));

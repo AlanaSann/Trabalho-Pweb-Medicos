@@ -1,5 +1,6 @@
 package medicos.projeto.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class MedicoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    
     public Medicos cadastrarMedico(Medicos medico) {
         medico.setStatus(true);
         enderecoRepository.save(medico.getEndereco());
@@ -68,5 +70,9 @@ public class MedicoService {
         enderecoRepository.save(medicoAserEditado.getEndereco());
         medicoRepository.save(medicoAserEditado);
         return medicoAserEditado;
+    }
+
+    public List<Medicos> listarMedicos(){
+        return medicoRepository.findAll();
     }
 }
